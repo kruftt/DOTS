@@ -62,7 +62,7 @@ partial struct PhysicsBatchForceCreationSystem : ISystem
             in ArchetypeChunk chunk,
             int ChunkIndex,
             bool useEnabledMask,
-            in v128 chunkEnabledMas
+            in v128 chunkEnabledMask
         )
         {
             Assert.IsFalse(useEnabledMask);

@@ -1,15 +1,15 @@
-# DOTS
-Modular implementations of Unity DOTS/ECS systems
+# DOTS Prototyping
+Implementations of Unity DOTS/ECS systems.
 
 &nbsp;
 ### Systems
-- [Shader-powered smooth and flipbook animations](./Assets/Systems/Animation/)
-- [Destroy entities after X ticks / seconds](./Assets/Systems/Lifecycle/Transient/)
+- [Destroy entities after X ticks / seconds](./Assets/Systems/Lifecycle/Transient/TransientSystem.cs)
 - [Load, instantiate, and initialize prefab entities](./Assets/Systems/Lifecycle/Prefab/)
+- [Shader-powered smooth and flipbook animations](./Assets/Systems/Animation/)
 - [Instantiate and initialize Low-Level 2D Physics (Box2D v3) worlds and bodies](./Assets/Systems/Physics/Body/)
-- [Copy transforms between physics and entity worlds](./Assets/Systems/Physics/Transform/)
+- [Copy transforms between physics and entity worlds](./Assets/Systems/Physics/Transform/TransformCopySystem.cs)
 - [Allow multiple systems to contribute to forces on bodies](./Assets/Systems/Physics/Force/)
-- [Compact all non-zero forces on bodies into a single physics API call](./Assets/Systems/Physics/Force/PhysicsBatchForceCreationSystem.cs)
+- [Compact non-zero forces on all bodies into a single physics API call](./Assets/Systems/Physics/Force/PhysicsBatchForceCreationSystem.cs)
 
 &nbsp;
 ### Tests
@@ -19,7 +19,8 @@ Modular implementations of Unity DOTS/ECS systems
 
 &nbsp;
 ### Video
-MassAnimationTest3:
+MassAnimationTest3 
+- 10,000 dynamic, animated circles, attracted to the center but repulsed by the mouse:
 
 https://github.com/user-attachments/assets/28fe1282-a5c0-4945-9a60-d23f30972081
 

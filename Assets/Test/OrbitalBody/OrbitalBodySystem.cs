@@ -1,6 +1,7 @@
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Transforms;
 using UnityEngine;
 
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
@@ -32,7 +33,7 @@ partial struct OrbitalBodySystem : ISystem
     }
 
     [BurstCompile]
-    [WithAll(typeof(OrbitalBodyTag))]
+    [WithAll(typeof(OrbitalBodyTag), typeof(PhysicsBodyHandle))]
     partial struct OrbitalBodyJob : IJobEntity
     {
         public Vector2 MousePos;
@@ -40,11 +41,11 @@ partial struct OrbitalBodySystem : ISystem
 
         void Execute(
             [EntityIndexInQuery] int index,
-            in PhysicsBodyHandle bodyHandle,
+            in LocalTransform transform,
             ref PhysicsBodyForce bodyForces
         )
         {
-            bodyForces.Force -= (float2)bodyHandle.Body.position;
+            bodyForces.Force -= new float2 (transform.Position.x, transform.Position.y);
         }
     }
 }

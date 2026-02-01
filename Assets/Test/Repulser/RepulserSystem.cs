@@ -1,6 +1,7 @@
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Transforms;
 using UnityEngine;
 
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
@@ -21,20 +22,20 @@ partial struct RepulserSystem : ISystem
     }
 
     [BurstCompile]
-    [WithAll(typeof(OrbitalBodyTag))]
+    [WithAll(typeof(OrbitalBodyTag), typeof(PhysicsBodyHandle))]
     partial struct RepulseJob : IJobEntity
     {
         public Vector2 MousePos;
 
         void Execute(
             [EntityIndexInQuery] int index,
-            in PhysicsBodyHandle bodyHandle,
+            in LocalTransform transform,
             ref PhysicsBodyForce bodyForces
         )
         {
-            Vector2 direction = (bodyHandle.Body.position - MousePos);
-            float distSquared = direction.sqrMagnitude;
-            bodyForces.Force += (float2)(5.0f * direction / distSquared);
+            var direction = new float2(transform.Position.x - MousePos.x, transform.Position.y - MousePos.y);
+            float coeff = 5.0f / (math.square(direction.x) + math.square(direction.y));
+            bodyForces.Force += coeff * direction;
         }
     }
 }

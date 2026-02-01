@@ -25,7 +25,7 @@ partial struct TransformCopySystem : ISystem
         if (physicsWorld == null || !physicsWorld.isValid)
             return;
 
-        var numUpdates = physicsWorld.bodyUpdateEvents.Length;
+        int numUpdates = physicsWorld.bodyUpdateEvents.Length;
         if (numUpdates == 0)
             return;
 

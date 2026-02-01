@@ -52,9 +52,9 @@ partial struct PhysicsBatchForceCreationSystem : ISystem
     {
         [ReadOnly] public ComponentTypeHandle<PhysicsBodyHandle> BodyHandle;
         [ReadOnly] public NativeArray<int> ChunkOffsets;
-
+        
         public ComponentTypeHandle<PhysicsBodyForce> ForceHandle;
-
+        
         [NativeDisableParallelForRestriction]
         public NativeArray<PhysicsBody.BatchForce> BatchForceBuffer;
 

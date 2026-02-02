@@ -5,14 +5,14 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 
-[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+[UpdateInGroup(typeof(SimulationSystemGroup))]
 [UpdateBefore(typeof(PhysicsBatchForceCreationSystem))]
 partial struct PhysicsForceChunkingSystem : ISystem
 {
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<PhysicsBodyForce>();
+        state.RequireForUpdate<PhysicsUpdateFlag>();
     }
 
     [BurstCompile]

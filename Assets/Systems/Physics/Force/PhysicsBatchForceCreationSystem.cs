@@ -6,7 +6,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine.LowLevelPhysics2D;
 
-[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+[UpdateInGroup(typeof(SimulationSystemGroup))]
 [UpdateAfter(typeof(PhysicsForceChunkingSystem))]
 [UpdateBefore(typeof(PhysicsBatchForceSubmissionSystem))]
 partial struct PhysicsBatchForceCreationSystem : ISystem
@@ -15,7 +15,7 @@ partial struct PhysicsBatchForceCreationSystem : ISystem
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate(SystemAPI.QueryBuilder().WithAll<PhysicsBodyForce, PhysicsBodyHandle>().Build());
-        state.RequireForUpdate<PhysicsBatchForce>();
+        state.RequireForUpdate<PhysicsUpdateFlag>();
     }
 
     [BurstCompile]

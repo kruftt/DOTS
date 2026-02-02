@@ -2,7 +2,7 @@ using Unity.Burst;
 using Unity.Entities;
 using UnityEngine.LowLevelPhysics2D;
 
-[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+[UpdateInGroup(typeof(SimulationSystemGroup))]
 [UpdateAfter(typeof(PhysicsBatchForceCreationSystem))]
 partial struct PhysicsBatchForceSubmissionSystem : ISystem
 {
@@ -10,6 +10,7 @@ partial struct PhysicsBatchForceSubmissionSystem : ISystem
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<PhysicsBatchForce>();
+        state.RequireForUpdate<PhysicsUpdateFlag>();
     }
 
     [BurstCompile]

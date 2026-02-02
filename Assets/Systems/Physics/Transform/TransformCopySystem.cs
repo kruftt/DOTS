@@ -7,14 +7,14 @@ using Unity.Transforms;
 using UnityEngine.LowLevelPhysics2D;
 using static UnityEngine.LowLevelPhysics2D.PhysicsEvents;
 
-[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+[UpdateInGroup(typeof(SimulationSystemGroup))]
 [UpdateBefore(typeof(TransformSystemGroup))]
 partial struct TransformCopySystem : ISystem
 {
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<PhysicsWorldHandle>();
+        state.RequireForUpdate<PhysicsUpdateFlag>();
     }
 
     [BurstCompile]

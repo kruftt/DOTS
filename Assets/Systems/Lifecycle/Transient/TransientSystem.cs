@@ -2,8 +2,7 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.Jobs;
 
-
-[UpdateInGroup(typeof(SimulationSystemGroup))]
+[UpdateAfter(typeof(SimulationSystemGroup))]
 partial struct TransientSystem : ISystem
 {
     [BurstCompile]

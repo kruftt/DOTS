@@ -1,3 +1,4 @@
+using Unity.Burst;
 using Unity.Entities;
 using Unity.Scenes;
 
@@ -61,6 +62,7 @@ public partial struct AppSystem : ISystem
         state.RequireForUpdate<AppCommand>();
     }
 
+    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         var appEntity = SystemAPI.GetSingletonEntity<AppTag>();
@@ -82,6 +84,7 @@ public partial struct AppSystem : ISystem
                     StartNewGame(ref state);
                     break;
             }
+
             ecb.DestroyEntity(entity);
         }
     }

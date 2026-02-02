@@ -24,3 +24,14 @@ MassAnimationTest3
 
 https://github.com/user-attachments/assets/28fe1282-a5c0-4945-9a60-d23f30972081
 
+&nbsp;
+Optimized version with 40,000 circles. Here I took manual control of physics simulation updates in order to decompose the physics operations into three stages:
+- Batching and copying forces from the Entity world to Physics world
+- Running the Physics simulation
+- Copying Transforms from the Physics world to Entity world
+
+The simulation step is the most expensive, so the two copying stages are capable of overlapping under heavy load.
+
+https://github.com/user-attachments/assets/66c2355d-ffd5-4883-9de4-b1bf1a918a34
+
+<img width="482" height="223" alt="image" src="https://github.com/user-attachments/assets/3ca08ea6-f0a5-4849-9ab2-14caf151d185" />

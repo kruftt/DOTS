@@ -7,6 +7,7 @@ using Unity.Mathematics;
 
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 [UpdateBefore(typeof(PhysicsBatchForceCreationSystem))]
+[UpdateBefore(typeof(PhysicsBatchForceCreationSystem))]
 partial struct PhysicsForceChunkingSystem : ISystem
 {
     [BurstCompile]

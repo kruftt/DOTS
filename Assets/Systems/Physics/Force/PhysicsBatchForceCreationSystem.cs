@@ -27,7 +27,7 @@ partial struct PhysicsBatchForceCreationSystem : ISystem
         for (int i = 0, numChunks = chunkCounts.Length; i < numChunks; i++)
         {
             int count = chunkCounts[i];
-            chunkCounts[i] = total; // count of changes within a chunk -> the chunk's offset
+            chunkCounts[i] = total; // replace # of changes within the chunk with it's offset
             total += count;
         }
 
@@ -68,7 +68,7 @@ partial struct PhysicsBatchForceCreationSystem : ISystem
             Assert.IsFalse(useEnabledMask);
             var bodies = chunk.GetNativeArray(ref BodyHandle);
             var forces = chunk.GetNativeArray(ref ForceHandle);
-            int offset = ChunkOffsets[ChunkIndex];
+            int chunkOffset = ChunkOffsets[ChunkIndex];
 
             for (int i = 0, forceIndex = 0, entityCount = chunk.Count; i < entityCount; i++)
             {
@@ -77,7 +77,7 @@ partial struct PhysicsBatchForceCreationSystem : ISystem
                     var force = new PhysicsBody.BatchForce(bodies[i].Body);
                     force.ApplyForceToCenter(forces[i].Force);
                     forces[i] = new PhysicsBodyForce { Force = float2.zero };
-                    BatchForceBuffer[offset + forceIndex] = force;
+                    BatchForceBuffer[chunkOffset + forceIndex] = force;
                     forceIndex++;
                 }
             }

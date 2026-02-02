@@ -7,8 +7,7 @@ using Unity.Transforms;
 using UnityEngine.LowLevelPhysics2D;
 using static UnityEngine.LowLevelPhysics2D.PhysicsEvents;
 
-[UpdateInGroup(typeof(SimulationSystemGroup))]
-[UpdateAfter(typeof(FixedStepSimulationSystemGroup))]
+[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 [UpdateBefore(typeof(TransformSystemGroup))]
 partial struct TransformCopySystem : ISystem
 {

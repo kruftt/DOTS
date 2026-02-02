@@ -24,19 +24,21 @@ class FlipbookAnimationAuthoring : MonoBehaviour
         public override void Bake(FlipbookAnimationAuthoring authoring)
         {
             var entity = GetEntity(TransformUsageFlags.Renderable);
-            
+
             AddComponent(entity, new FlipbookAnimationPlayer
             {
                 Clip = authoring.Clip,
                 Speed = authoring.Speed,
                 Progress = 0f
             });
-            
-            AddComponent(entity, new FlipbookAnimationMaterialOverride {
+
+            AddComponent(entity, new FlipbookAnimationMaterialOverride
+            {
                 TileIndex = 0
             });
-            
-            AddComponent(entity, new FlipbookAnimationClipsBlob {
+
+            AddComponent(entity, new FlipbookAnimationClipsBlob
+            {
                 Blob = MakeAnimationBlob(authoring.Clips)
             });
         }
@@ -61,6 +63,7 @@ class FlipbookAnimationAuthoring : MonoBehaviour
             var blobAssetReference = builder.CreateBlobAssetReference<FlipbookAnimationClips>(Allocator.Persistent);
             builder.Dispose();
             AddBlobAsset(ref blobAssetReference, out var hash);
+
             return blobAssetReference;
         }
     }

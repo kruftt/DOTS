@@ -48,13 +48,6 @@ partial struct TransformCopySystem : ISystem
     }
 
     [BurstCompile]
-    public void OnDestroy(ref SystemState state)
-    {
-
-    }
-
-
-    [BurstCompile]
     partial struct CopyJob : IJobParallelFor
     {
         [ReadOnly]

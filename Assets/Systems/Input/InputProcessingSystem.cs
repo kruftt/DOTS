@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 [UpdateInGroup(typeof(InitializationSystemGroup))]
 public partial class InputProcessingSystem : SystemBase
 {
-
     protected override void OnCreate()
     {
         RequireForUpdate(GetEntityQuery(typeof(InputState)));

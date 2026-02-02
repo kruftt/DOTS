@@ -65,6 +65,7 @@ partial struct TransientSystem : ISystem
                     ecb.AddComponent<TransientExpiredEvent>(index, evt);
                     ecb.SetComponent(index, evt, new TransientExpiredEvent { Entity = entity });
                 }
+
                 ecb.DestroyEntity(index, entity);
             }
         }
@@ -91,6 +92,7 @@ partial struct TransientSystem : ISystem
                     ecb.AddComponent<TransientExpiredEvent>(index, evt);
                     ecb.SetComponent(index, evt, new TransientExpiredEvent { Entity = entity });
                 }
+
                 ecb.DestroyEntity(index, entity);
             }
         }

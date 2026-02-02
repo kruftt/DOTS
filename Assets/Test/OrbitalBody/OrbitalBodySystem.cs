@@ -45,7 +45,7 @@ partial struct OrbitalBodySystem : ISystem
             ref PhysicsBodyForce bodyForces
         )
         {
-            bodyForces.Force -= new float2 (transform.Position.x, transform.Position.y);
+            bodyForces.Force -= new float2(transform.Position.x, transform.Position.y);
         }
     }
 }

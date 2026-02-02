@@ -52,10 +52,4 @@ partial struct PhysicsBodyInitSystem : ISystem
             ecb.DestroyEntity(entity);
         }
     }
-
-    [BurstCompile]
-    public void OnDestroy(ref SystemState state)
-    {
-
-    }
 }

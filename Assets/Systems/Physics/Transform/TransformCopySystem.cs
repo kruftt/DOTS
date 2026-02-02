@@ -8,18 +8,25 @@ using UnityEngine.LowLevelPhysics2D;
 using static UnityEngine.LowLevelPhysics2D.PhysicsEvents;
 
 [UpdateInGroup(typeof(SimulationSystemGroup))]
-[UpdateBefore(typeof(TransformSystemGroup))]
 partial struct TransformCopySystem : ISystem
 {
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<PhysicsUpdateFlag>();
+        state.RequireForUpdate<PhysicsWorldHandle>();
+        state.RequireForUpdate<PhysicsTransformPassFlag>();
     }
 
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
+        var app = SystemAPI.GetSingletonEntity<AppTag>();
+        if (!SystemAPI.IsComponentEnabled<PhysicsTransformPassFlag>(app)) return;
+
+        SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>()
+            .CreateCommandBuffer(state.WorldUnmanaged)
+            .SetComponentEnabled<PhysicsTransformPassFlag>(app, false);
+
         var physicsWorld = SystemAPI.GetSingleton<PhysicsWorldHandle>().World;
         if (physicsWorld == null || !physicsWorld.isValid)
             return;

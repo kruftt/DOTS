@@ -1,3 +1,4 @@
+using System;
 using Unity.Entities;
 using Unity.Entities.Serialization;
 using Unity.Mathematics;
@@ -17,7 +18,7 @@ public class MassAnimationTest3Authoring : MonoBehaviour
         public override void Bake(MassAnimationTest3Authoring authoring)
         {
             var random = new Unity.Mathematics.Random();
-            random.InitState(26246254);
+            random.InitState((uint)DateTime.Now.Ticks);
 
             for (int i = 0; i < 10000; i++)
             {
@@ -67,7 +68,7 @@ public class MassAnimationTest3Authoring : MonoBehaviour
                 foreach (var shape in authoring.Shapes)
                 {
                     var _shape = shape;
-                    _shape.density = 4.0f * scale;
+                    _shape.density = random.NextFloat(0.95f, 1.05f);
                     shapes.Add(new PhysicsBodyShapes
                     {
                         Shape = _shape

@@ -5,19 +5,22 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 
-[UpdateInGroup(typeof(SimulationSystemGroup))]
+[UpdateInGroup(typeof(PhysicsForcePassSystemGroup))]
 [UpdateBefore(typeof(PhysicsBatchForceCreationSystem))]
 partial struct PhysicsForceChunkingSystem : ISystem
 {
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<PhysicsUpdateFlag>();
+        state.RequireForUpdate<PhysicsBodyForceChunkCount>();
+        state.RequireForUpdate<PhysicsSimulationFlag>();
     }
 
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
+        if (SystemAPI.IsComponentEnabled<PhysicsSimulationFlag>(SystemAPI.GetSingletonEntity<AppTag>())) return;
+
         var forceQuery = SystemAPI.QueryBuilder()
             .WithAll<PhysicsBodyForce>()
             .Build();

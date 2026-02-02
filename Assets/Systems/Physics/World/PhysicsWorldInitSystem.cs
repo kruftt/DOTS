@@ -6,7 +6,6 @@ using UnityEngine.LowLevelPhysics2D;
 [UpdateBefore(typeof(PhysicsBodyInitSystem))]
 partial struct PhysicsWorldInitSystem : ISystem
 {
-    [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<PhysicsWorldInitData>();
@@ -43,6 +42,14 @@ partial struct PhysicsWorldInitSystem : ISystem
                 World = PhysicsWorld.Create(data.ValueRO.Definition)
             });
 
+            if (!em.HasComponent<PhysicsSimulationFlag>(app))
+            {
+                ecb.AddComponent<PhysicsSimulationFlag>(app);
+                ecb.AddComponent<PhysicsTransformPassFlag>(app);
+                ecb.SetComponentEnabled<PhysicsSimulationFlag>(app, false);
+                ecb.SetComponentEnabled<PhysicsTransformPassFlag>(app, false);
+            }
+
             if (!em.HasBuffer<PhysicsBatchForce>(app))
             {
                 ecb.AddBuffer<PhysicsBatchForce>(app);
@@ -57,7 +64,7 @@ partial struct PhysicsWorldInitSystem : ISystem
         }
     }
 
-    [BurstCompile]
+
     public void OnDestroy(ref SystemState state)
     {
         foreach (var handle in SystemAPI.Query<RefRO<PhysicsWorldHandle>>())

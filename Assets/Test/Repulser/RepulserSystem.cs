@@ -4,14 +4,14 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
-[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-[UpdateBefore(typeof(PhysicsForceChunkingSystem))]
+[UpdateInGroup(typeof(PhysicsForceSystemGroup))]
 partial struct RepulserSystem : ISystem
 {
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate(SystemAPI.QueryBuilder().WithAll<InputState>().Build());
+        state.RequireForUpdate<PhysicsSimulationFlag>();
+        state.RequireForUpdate<InputState>();
     }
 
     [BurstCompile]
@@ -34,7 +34,7 @@ partial struct RepulserSystem : ISystem
         )
         {
             var direction = new float2(transform.Position.x - MousePos.x, transform.Position.y - MousePos.y);
-            float coeff = 5.0f / (math.square(direction.x) + math.square(direction.y));
+            float coeff = 10.0f / (math.square(direction.x) + math.square(direction.y));
             bodyForces.Force += coeff * direction;
         }
     }

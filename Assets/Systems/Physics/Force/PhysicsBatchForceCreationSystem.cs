@@ -6,7 +6,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine.LowLevelPhysics2D;
 
-[UpdateInGroup(typeof(SimulationSystemGroup))]
+[UpdateInGroup(typeof(PhysicsForcePassSystemGroup))]
 [UpdateAfter(typeof(PhysicsForceChunkingSystem))]
 [UpdateBefore(typeof(PhysicsBatchForceSubmissionSystem))]
 partial struct PhysicsBatchForceCreationSystem : ISystem
@@ -14,13 +14,15 @@ partial struct PhysicsBatchForceCreationSystem : ISystem
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
+        state.RequireForUpdate<PhysicsSimulationFlag>();
         state.RequireForUpdate(SystemAPI.QueryBuilder().WithAll<PhysicsBodyForce, PhysicsBodyHandle>().Build());
-        state.RequireForUpdate<PhysicsUpdateFlag>();
     }
 
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
+        if (SystemAPI.IsComponentEnabled<PhysicsSimulationFlag>(SystemAPI.GetSingletonEntity<AppTag>())) return;
+
         var chunkCounts = SystemAPI.GetSingletonBuffer<PhysicsBodyForceChunkCount>().Reinterpret<int>().AsNativeArray();
 
         int total = 0;

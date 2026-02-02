@@ -4,20 +4,16 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
-[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-[UpdateBefore(typeof(PhysicsForceChunkingSystem))]
+[UpdateInGroup(typeof(PhysicsForceSystemGroup))]
 partial struct OrbitalBodySystem : ISystem
 {
-    EntityQuery orbitalQuery;
-
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        orbitalQuery = SystemAPI.QueryBuilder()
+        state.RequireForUpdate<PhysicsSimulationFlag>();
+        state.RequireForUpdate(SystemAPI.QueryBuilder()
                 .WithAll<PhysicsBodyHandle, PhysicsBodyForce, OrbitalBodyTag>()
-                .Build();
-
-        state.RequireForUpdate(orbitalQuery);
+                .Build());
     }
 
     [BurstCompile]

@@ -2,7 +2,7 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.Jobs;
 
-[UpdateAfter(typeof(SimulationSystemGroup))]
+[UpdateInGroup(typeof(SimulationSystemGroup))]
 partial struct TransientSystem : ISystem
 {
     [BurstCompile]
@@ -21,11 +21,10 @@ partial struct TransientSystem : ISystem
             .CreateCommandBuffer(state.WorldUnmanaged)
             .AsParallelWriter();
 
-        var eventCleanup = new CleanupEventsJob { ecb = ecb }.ScheduleParallel(state.Dependency);
-
+        state.Dependency = new CleanupEventsJob { ecb = ecb }.ScheduleParallel(state.Dependency);
         state.Dependency = JobHandle.CombineDependencies(
-            new DestroyTickersJob { ecb = ecb }.ScheduleParallel(eventCleanup),
-            new DestroyTimersJob { dt = SystemAPI.Time.DeltaTime, ecb = ecb }.ScheduleParallel(eventCleanup)
+            new DestroyTickersJob { ecb = ecb }.ScheduleParallel(state.Dependency),
+            new DestroyTimersJob { dt = SystemAPI.Time.DeltaTime, ecb = ecb }.ScheduleParallel(state.Dependency)
         );
     }
 

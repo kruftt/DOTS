@@ -37,12 +37,12 @@ public class MassAnimationTestAuthoring : MonoBehaviour
                     Transform = new LocalTransform
                     {
                         Position = new float3(
-                            random.NextFloat(-9f, 9f),
-                            random.NextFloat(-5f, 5f),
+                            random.NextFloat(-17.66f, 17.66f),
+                            random.NextFloat(-10f, 10f),
                             0f
                             ),
                         Rotation = quaternion.identity,
-                        Scale = random.NextFloat(0.25f, 0.42f)
+                        Scale = random.NextFloat(0.6f, 1.0f)
                     }
                 });
 

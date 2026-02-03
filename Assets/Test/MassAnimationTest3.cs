@@ -20,7 +20,7 @@ public class MassAnimationTest3Authoring : MonoBehaviour
             var random = new Unity.Mathematics.Random();
             random.InitState((uint)DateTime.Now.Ticks);
 
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 25000; i++)
             {
                 Entity entity = CreateAdditionalEntity(TransformUsageFlags.Dynamic);
 
@@ -35,7 +35,7 @@ public class MassAnimationTest3Authoring : MonoBehaviour
                     random.NextFloat(0f, 100f)
                 );
 
-                float scale = random.NextFloat(0.25f, 0.5f);
+                float scale = random.NextFloat(0.4f, 0.6f);
                 AddComponent(entity, new TransformInitData
                 {
                     Transform = new LocalTransform
@@ -68,7 +68,7 @@ public class MassAnimationTest3Authoring : MonoBehaviour
                 foreach (var shape in authoring.Shapes)
                 {
                     var _shape = shape;
-                    _shape.density = random.NextFloat(0.95f, 1.05f);
+                    _shape.density = random.NextFloat(0.45f, 0.55f);
                     shapes.Add(new PhysicsBodyShapes
                     {
                         Shape = _shape

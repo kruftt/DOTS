@@ -30,18 +30,18 @@ public class MassAnimationTest2Authoring : MonoBehaviour
                     Transform = new LocalTransform()
                     {
                         Position = new Unity.Mathematics.float3(
-                            random.NextFloat(-9f, 9f),
-                            random.NextFloat(-5f, 5f),
+                            random.NextFloat(-17.66f, 17.66f),
+                            random.NextFloat(-10f, 10f),
                             random.NextFloat(0f, 100f)
                         ),
-                        Scale = random.NextFloat(0.25f, 0.42f),
+                        Scale = random.NextFloat(0.6f, 1.0f),
                         Rotation = Unity.Mathematics.quaternion.identity
                     }
                 });
 
                 AddComponent(entity, new SmoothAnimationInitData
                 {
-                    Speed = random.NextFloat(0.5f, 2.0f),
+                    Speed = random.NextFloat(0.6f, 1.2f),
                     Duration = random.NextFloat(2.0f, 8.0f),
                     Reverse = random.NextBool(),
                     Loop = true,

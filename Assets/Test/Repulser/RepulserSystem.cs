@@ -34,7 +34,7 @@ partial struct RepulserSystem : ISystem
         )
         {
             var direction = new float2(transform.Position.x - MousePos.x, transform.Position.y - MousePos.y);
-            float coeff = 10.0f / (math.square(direction.x) + math.square(direction.y));
+            float coeff = math.min(80f, 12.0f / (math.square(direction.x) + math.square(direction.y)));
             bodyForces.Force += coeff * direction;
         }
     }
